@@ -1,0 +1,61 @@
+﻿@model BLOC3.Models.Evenement
+@{
+    ViewData["Title"] = "Event Details";
+}
+<div class="container">
+    <h2>@Model.SportName</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.ImgUrlPath" class="img-fluid" alt="Image de l'événement" style="max-height: 300px;">
+        </div>
+        <div class="col-md-6">
+            <h4>Description</h4>
+            <p>@Model.Description</p>
+            <h4>Date</h4>
+            <p>@Model.DateDebut.ToString("dd MMM yyyy HH:mm") - @Model.DateFin.ToString("dd MMM yyyy HH:mm")</p>
+            <h4>Prix</h4>
+            <p>@Model.Prix €</p>
+
+            <form asp-action="AddToCart" method="post">
+                <input type="hidden" name="id" value="@Model.Id_Evenement" />
+                <div class="form-group">
+                    <label for="quantity">Nombre de personnes:</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control" value="" min="1" required />
+                </div>
+                <div class="form-group">
+                    <label for="offreId">Choisissez une offre:</label>
+                    <select id="offreId" name="offreId" class="form-control" required>
+                        @foreach (var offre in ViewBag.Offres)
+                        {
+                            <option value="@offre.Id_Offre" data-nbpersonne="@offre.NbPersonne">@offre.Type (@offre.Pourcentage%)</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('quantity').addEventListener('input', function () {
+            var quantity = parseInt(this.value);
+            var offres = document.getElementById('offreId').options;
+            document.getElementById('offreId').selectedIndex = 0; // Sélectionne par défaut l'option vide
+            for (var i = 0; i < offres.length; i++) {
+                if (parseInt(offres[i].getAttribute('data-nbpersonne')) === quantity) {
+                    document.getElementById('offreId').selectedIndex = i;
+                    break;
+                }
+            }
+        });
+
+        document.getElementById('offreId').addEventListener('change', function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var nbPersonne = parseInt(selectedOption.getAttribute('data-nbpersonne'));
+            document.getElementById('quantity').value = nbPersonne;
+        });
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<BLOC3.Models.Evenement>
+
+
+@foreach (var evenement in Model)
+{
+    <div class="col-md-3 mb-4">
+        <div class="card h-100">
+            <a href="@Url.Action("EventDetails", "Home", new { id = evenement.Id_Evenement })" class="stretched-link">
+                <img src="@evenement.ImgUrlPath" class="card-img-top" alt="Image de @evenement.SportName" style="height: 200px; object-fit: cover; width: 100%;">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">@evenement.SportName</h5>
+                <p class="card-text">@evenement.Description</p>
+                <p class="card-text"><strong>Date:</strong> @evenement.DateDebut.ToString("dd MMM yyyy HH:mm") - @evenement.DateFin.ToString("dd MMM yyyy HH:mm")</p>
+                <p class="card-text"><strong>Genre:</strong> @evenement.Genre</p>
+                <p class="card-text"><strong>Type:</strong> @evenement.TypeEpreuve</p>
+                <p class="card-text"><strong>Prix:</strong> <h3>@evenement.Prix €</h3></p>
+            </div>
+        </div>
+    </div>
+}

@@ -22,6 +22,15 @@ builder.Services.AddDefaultIdentity<JO2024User>(options =>
     .AddRoles<IdentityRole>()  // Ajoutez cette ligne pour utiliser des rôles
     .AddEntityFrameworkStores<JO2024Context>();
 
+// Add session handling
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings
