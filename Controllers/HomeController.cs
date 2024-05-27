@@ -298,7 +298,7 @@ namespace BLOC3.Controllers
         {
             using (var qrGenerator = new QRCodeGenerator())
             {
-                string baseUrl = "https://votre-domaine.com/Admin/ValidateTicket"; // Remplacez par votre domaine
+                string baseUrl = "https://bloc3andyrtv-3df21a13d161.herokuapp.com/Admin/ValidateTicket"; // Remplacez par votre domaine
                 string qrContent = $"{baseUrl}?achatGuid={achat.AchatGuid}&ticketGuid={ticket.TicketGuid}";
                 var qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q);
                 var qrCode = new PngByteQRCode(qrCodeData);
