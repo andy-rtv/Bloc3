@@ -1,0 +1,1 @@
+﻿web: dotnet BLOC3.dll
