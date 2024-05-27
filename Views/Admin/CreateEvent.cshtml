@@ -1,0 +1,59 @@
+﻿@model BLOC3.Models.Evenement
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+<div class="container">
+<h1>Create Event</h1>
+
+<form asp-action="CreateEvent" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="SportName" class="control-label"></label>
+        <input asp-for="SportName" class="form-control" />
+        <span asp-validation-for="SportName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateDebut" class="control-label"></label>
+        <input asp-for="DateDebut" class="form-control" type="datetime-local" />
+        <span asp-validation-for="DateDebut" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateFin" class="control-label"></label>
+        <input asp-for="DateFin" class="form-control" type="datetime-local" />
+        <span asp-validation-for="DateFin" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImgUrlPath" class="control-label"></label>
+        <input type="file" name="imageFile" class="form-control" />
+        <span asp-validation-for="ImgUrlPath" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Genre" class="control-label"></label>
+            <select asp-for="Genre" class="form-control" asp-items="Html.GetEnumSelectList<BLOC3.Models.Genre>()"></select>
+        <span asp-validation-for="Genre" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TypeEpreuve" class="control-label"></label>
+            <select asp-for="TypeEpreuve" class="form-control" asp-items="Html.GetEnumSelectList<BLOC3.Models.TypeEpreuve>()"></select>
+        <span asp-validation-for="TypeEpreuve" class="text-danger"></span>
+    </div>
+        <div class="form-group mb-3">
+        <label asp-for="Prix" class="control-label"></label>
+        <input asp-for="Prix" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Prix" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

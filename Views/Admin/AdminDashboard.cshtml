@@ -1,0 +1,98 @@
+﻿@model IEnumerable<BLOC3.Areas.Identity.Data.JO2024User>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container">
+    <h1>Admin Dashboard</h1>
+
+    <h2>Manage Offers</h2>
+    <a asp-action="CreateOffer" class="btn btn-primary">Create New Offer</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Pourcentage</th>
+                <th>Nombre de Personnes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var offer in ViewBag.Offers)
+            {
+                <tr>
+                    <td>@offer.Type</td>
+                    <td>@offer.Description</td>
+                    <td>@offer.Pourcentage</td>
+                    <td>@offer.NbPersonne</td>
+                    <td>
+                        <a asp-action="EditOffer" asp-route-id="@offer.Id_Offre" class="btn btn-secondary">Edit</a>
+                        <a asp-action="DeleteOffer" asp-route-id="@offer.Id_Offre" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>Manage Events</h2>
+    <a asp-action="CreateEvent" class="btn btn-primary">Create New Event</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sport Name</th>
+                <th>Description</th>
+                <th>Date Debut</th>
+                <th>Date Fin</th>
+                <th>Genre</th>
+                <th>Type Epreuve</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evenement in ViewBag.Events)
+            {
+                <tr>
+                    <td>@evenement.SportName</td>
+                    <td>@evenement.Description</td>
+                    <td>@evenement.DateDebut.ToString("dd/MM/yyyy")</td>
+                    <td>@evenement.DateFin.ToString("dd/MM/yyyy")</td>
+                    <td>@evenement.Genre</td>
+                    <td>@evenement.TypeEpreuve</td>
+                    <td>@evenement.Prix</td>
+                    <td>
+                        <a asp-action="EditEvent" asp-route-id="@evenement.Id_Evenement" class="btn btn-secondary">Edit</a>
+                        <a asp-action="DeleteEvent" asp-route-id="@evenement.Id_Evenement" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>Manage Users</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>
+                        <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-secondary">Edit</a>
+                        <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
