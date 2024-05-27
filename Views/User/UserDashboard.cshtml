@@ -1,0 +1,32 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Tableau de bord utilisateur";
+}
+<div class="container">
+<h2>Historique de vos achats</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date d'Achat</th>
+            <th>Montant Total</th>
+            <th>ID de l'Achat</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var achat in Model)
+        {
+            <tr>
+                <td>@achat.DateAchat</td>
+                <td>@achat.MontantTotal €</td>
+                <td>@achat.AchatGuid</td>
+                <td>
+                    <a asp-controller="User" asp-action="AchatDetails" asp-route-id="@achat.AchatGuid">Voir les détails</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

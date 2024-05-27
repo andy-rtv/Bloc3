@@ -1,0 +1,135 @@
+﻿@model BLOC3.Models.Achat
+
+@{
+    ViewData["Title"] = "Détails de l'Achat";
+}
+<div class="container">
+    <h2><u>Détails de l'Achat</u></h2>
+
+    <h4 class="bg-info p-2">Date d'Achat : @Model.DateAchat</h4>
+    <h4 class="bg-white p-2">Montant Total : @Model.MontantTotal €</h4>
+
+    @foreach (var aeo in Model.AchatEvenementOffres)
+    {
+        <div class="container bg-white p-2">
+            <h3>Événements Associés</h3>
+            <h4>@aeo.Evenement.SportName</h4>
+            <p>@aeo.Evenement.Description</p>
+            <p>Date de Début : @aeo.Evenement.DateDebut</p>
+            <p>Date de Fin : @aeo.Evenement.DateFin</p>
+            <p>Genre : @aeo.Evenement.Genre</p>
+            <p>Type d'Épreuve : @aeo.Evenement.TypeEpreuve</p>
+            <p>Prix : @aeo.Evenement.Prix</p>
+        </div>
+
+        <div class="container bg-info p-2">
+            <h3>Tickets Associés</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>QR Code Path</th>
+                        <th>Date de Création</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in aeo.Tickets)
+                    {
+                        <tr>
+                            <td><img class="qr-image" src="@ticket.QRCodePath" width="80px" height="80px" alt="QR Code" /></td>
+                            <td>@ticket.CreationDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
+    }
+</div>
+
+<!-- Le modal -->
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-content">
+        <img id="modalImage" src="" alt="QR Code" />
+    </div>
+</div>
+
+<style>
+    /* Le modal (arrière-plan) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    /* Contenu du modal (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+        /* L'image à l'intérieur du modal (peut être réduite) */
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+
+    /* Style pour la croix de fermeture */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+<script>
+    // Obtenir le modal
+    var modal = document.getElementById("myModal");
+
+    // Obtenir l'élément image du modal
+    var modalImg = document.getElementById("modalImage");
+
+    // Obtenir la croix de fermeture
+    var span = document.getElementsByClassName("close")[0];
+
+    // Ouvrir le modal lorsque l'image est cliquée
+    var images = document.getElementsByClassName("qr-image");
+    for (var i = 0; i < images.length; i++) {
+        images[i].onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+    }
+
+    // Fermer le modal lorsque la croix est cliquée
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // Fermer le modal en cliquant en dehors de l'image
+    modal.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
