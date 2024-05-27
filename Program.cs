@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using BLOC3.Areas.Identity.Data;
-using BLOC3.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,15 +18,6 @@ builder.Services.AddDefaultIdentity<JO2024User>(options =>
 })
     .AddRoles<IdentityRole>()  // Ajoutez cette ligne pour utiliser des rôles
     .AddEntityFrameworkStores<JO2024Context>();
-
-// Add session handling
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -57,6 +45,15 @@ builder.Services.AddScoped<IUserClaimsPrincipalFactory<JO2024User>, ApplicationU
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+// Configuration de la session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
@@ -76,6 +73,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Utilisation de la session
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllerRoute(

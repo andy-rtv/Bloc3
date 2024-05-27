@@ -31,8 +31,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    <div class="d-flex align-items-center">
+                        <a class="nav-link position-relative" asp-area="" asp-controller="Home" asp-action="Cart">
+                            <i class="bi bi-cart"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                @(Context.Session.Get<List<PanierItem>>("Cart")?.Count ?? 0)
+                            </span>
+                        </a>
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-                <partial name="_LoginPartial"/>
             </div>
         </nav>
     </header>

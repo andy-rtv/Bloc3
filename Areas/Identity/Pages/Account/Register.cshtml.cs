@@ -30,13 +30,15 @@ namespace BLOC3.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<JO2024User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<JO2024User> userManager,
             IUserStore<JO2024User> userStore,
             SignInManager<JO2024User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +46,7 @@ namespace BLOC3.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -133,6 +136,12 @@ namespace BLOC3.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Assigner le rôle "User" par défaut
+                    if (await _roleManager.RoleExistsAsync("User"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

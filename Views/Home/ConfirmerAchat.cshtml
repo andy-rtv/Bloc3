@@ -1,0 +1,71 @@
+﻿@model List<BLOC3.Models.PanierItem>
+
+@{
+    ViewData["Title"] = "Confirmer Achat";
+}
+
+<h2>Confirmer Achat</h2>
+
+@if (Model.Count == 0)
+{
+    <p>Votre panier est vide.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Événement</th>
+                <th>Offre</th>
+                <th>Quantité</th>
+                <th>Prix Unitaire</th>
+                <th>Prix Total (Avant réduction)</th>
+                <th>Prix Total (Après réduction)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Evenement.SportName</td>
+                    <td style="background-color: #0047AB; color: #ffffff;">@item.Offre.Type (- @item.Offre.Pourcentage %)</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Evenement.Prix €</td>
+                    @* Calculer le prix total avec et sans réduction *@
+                    @{
+                        var discount = item.Offre.Pourcentage / 100m;
+                        var priceWithDiscount = item.Evenement.Prix * (1 - discount);
+                        var totalPriceWithDiscount = item.Quantity * priceWithDiscount;
+                        var totalPriceWithoutDiscount = item.Quantity * item.Evenement.Prix;
+                    }
+                    <td>@totalPriceWithoutDiscount €</td>
+                    <td>@totalPriceWithDiscount €</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h4>
+        Prix total avant réduction:
+        @{
+            var totalCartPriceWithoutDiscount = Model.Sum(item => item.Quantity * item.Evenement.Prix);
+        }
+        @totalCartPriceWithoutDiscount €
+    </h4>
+    <h4>
+        Prix total après réduction:
+        @{
+            var totalCartPriceWithDiscount = Model.Sum(item =>
+            {
+                var discount = item.Offre.Pourcentage / 100m;
+                var priceWithDiscount = item.Evenement.Prix * (1 - discount);
+                return item.Quantity * priceWithDiscount;
+            });
+        }
+        @totalCartPriceWithDiscount €
+    </h4>
+
+    <form asp-action="ConfirmerAchatPost" method="post">
+        <button type="submit" class="btn btn-success">Confirmer l'achat</button>
+        <a asp-action="Billetterie" class="btn btn-primary">Continuer les achats</a>
+    </form>
+}
