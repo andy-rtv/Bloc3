@@ -46,7 +46,6 @@ namespace BLOC3.Controllers
         // Affiche la page Billetterie avec des options de filtrage
         public async Task<IActionResult> Billetterie(string searchString, int? genre, decimal? minPrice, decimal? maxPrice, DateTime? startDate, DateTime? endDate, TypeEpreuve? typeEpreuve)
         {
-            // Initialisation des filtres
             ViewData["CurrentFilter"] = searchString;
             ViewData["MinPriceFilter"] = minPrice;
             ViewData["MaxPriceFilter"] = maxPrice;
@@ -54,9 +53,9 @@ namespace BLOC3.Controllers
             ViewData["EndDateFilter"] = endDate?.ToString("yyyy-MM-dd");
             ViewData["TypeEpreuveFilter"] = typeEpreuve;
 
-            var evenements = from e in _context.Evenements select e;
+            var evenements = from e in _context.Evenements
+                             select e;
 
-            // Application des filtres
             if (!String.IsNullOrEmpty(searchString))
             {
                 evenements = evenements.Where(e => e.SportName.Contains(searchString));
@@ -92,8 +91,12 @@ namespace BLOC3.Controllers
                 evenements = evenements.Where(e => e.TypeEpreuve == typeEpreuve);
             }
 
+            var offres = await _context.Offres.Where(o => o.Id_Offre != 1).ToListAsync();
+            ViewBag.Offres = offres;
+
             return View(await evenements.AsNoTracking().ToListAsync());
         }
+
         // Affiche les détails d'un événement
         public async Task<IActionResult> EventDetails(int? id)
         {

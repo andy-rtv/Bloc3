@@ -57,51 +57,25 @@ height: 780px;
 
                 <main class="p-2">
                     <div class="row row-cols-1 row-cols-md-3 text-center">
-                        <div class="col">
-                            <div class="card rounded-3 shadow-sm">
-                                <div class="card-header py-3">
-                                    <h4 class="my-0 fw-normal">SOLO</h4>
-                                </div>
-                                <div class="card-body">
-                                    <h1 class="card-title pricing-card-title">-8%</h1>
-                                    <ul class="list-unstyled mt-3 mb-4">
-                                        <li>Accès pour 1 personne</li>
-                                        <li>Places limitées</li>
-                                    </ul>
-                                    <button type="button" class="w-100 btn btn-lg btn-outline-dark">Réserver maintenant</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card rounded-3 shadow-sm">
-                                <div class="card-header py-3">
-                                    <h4 class="my-0 fw-normal">DUO</h4>
-                                </div>
-                                <div class="card-body">
-                                    <h1 class="card-title pricing-card-title">-12%</h1>
-                                    <ul class="list-unstyled mt-3 mb-4">
-                                        <li>Accès pour 2 personnes</li>
-                                        <li>Places limitées</li>
-                                    </ul>
-                                    <button type="button" class="w-100 btn btn-lg btn-dark">Réserver maintenant</button>
+                        @foreach (var offre in ViewBag.Offres)
+                        {
+                            <div class="col">
+                                <div class="card rounded-3 shadow-sm">
+                                    <div class="card-header py-3">
+                                        <h4 class="my-0 fw-normal">@offre.Type</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1 class="card-title pricing-card-title">-@offre.Pourcentage%</h1>
+                                        <ul class="list-unstyled mt-3 mb-4">
+                                            <li>Accès pour @offre.NbPersonne personne(s)</li>
+                                            <li>@offre.Description</li>
+                                            <li>Places limitées</li>
+                                        </ul>
+                                        <a type="button" class="w-100 btn btn-lg btn-outline-dark" href="#Billetterie">Réserver maintenant</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class="card rounded-3 shadow-sm border-dark">
-                                <div class="card-header py-3 text-bg-primary border-dark">
-                                    <h4 class="my-0 fw-normal">FAMILIALE</h4>
-                                </div>
-                                <div class="card-body">
-                                    <h1 class="card-title pricing-card-title">-20%</h1>
-                                    <ul class="list-unstyled mt-3 mb-4">
-                                        <li>Accès pour 4 personnes</li>
-                                        <li>Places limitées</li>
-                                    </ul>
-                                    <button type="button" class="w-100 btn btn-lg btn-dark">Réserver maintenant</button>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </main>
             </div>
@@ -109,6 +83,7 @@ height: 780px;
     </div>
 </div>
 <hr />
+
 <!--Gallerie d'Evenements-->
 <section id="Billetterie">
     <div class="container mt-4">
@@ -176,7 +151,7 @@ height: 780px;
             </div>
         </div>
 
-        <div class="row" id="eventsContainer">
+        <div class="row justify-content-center" id="eventsContainer">
             @await Html.PartialAsync("_EventCardsPartial", Model)
         </div>
     </div>

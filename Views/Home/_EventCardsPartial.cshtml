@@ -3,7 +3,7 @@
 
 @foreach (var evenement in Model)
 {
-    <div class="col-md-3 mb-4">
+    <div class="col-md-3 mb-4 card-custom">
         <div class="card h-100">
             <a href="@Url.Action("EventDetails", "Home", new { id = evenement.Id_Evenement })" class="stretched-link">
                 <img src="@evenement.ImgUrlPath" class="card-img-top" alt="Image de @evenement.SportName" style="height: 200px; object-fit: cover; width: 100%;">

@@ -31,7 +31,7 @@
                         @{
                             var salesCount = ViewBag.SalesCount.ContainsKey(offer.Id_Offre) ? ViewBag.SalesCount[offer.Id_Offre] : 0;
                         }
-                        @salesCount
+                        @salesCount tickets
                     </td>
                     <td>
                         <a asp-action="EditOffer" asp-route-id="@offer.Id_Offre" class="btn btn-secondary">Edit</a>

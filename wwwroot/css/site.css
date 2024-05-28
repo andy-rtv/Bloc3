@@ -6,8 +6,9 @@ html {
     padding: 0;
 }
 @media (min-width: 768px) {
-    html {
-        font-size: 16px;
+    .row-cols-md-2 > * {
+        flex: 0 0 auto;
+        width: 50%;
     }
 }
 
@@ -23,8 +24,31 @@ body {
 }
 .nav-item .nav-link {
     text-transform: uppercase;
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 10px;
+    padding: 10px;
 }
 
+    .navbar-nav .nav-link:hover {
+        color: #0d730d;
+        background-color: #f1f1f1;
+    }
+
+    .navbar-nav .nav-link.text-primary:hover {
+        color: #0d730d !important;
+    }
+
+.navbar .d-flex.align-items-center .nav-link {
+    margin-right: 15px;
+}
+
+    .navbar .d-flex.align-items-center .nav-link:last-child {
+        margin-right: 0;
+    }
+.bi.bi-cart:hover {
+    background-color: #f1f1f1;
+}
 .table thead th {
     padding: 10px 15px;
 }
@@ -49,7 +73,17 @@ body {
     object-fit: cover;
     width: 100%;
 }
+.card-custom {
+    min-height: 400px; /* Définir une hauteur minimale pour les cartes */
+    min-width: 250px; /* Définir une largeur minimale pour les cartes */
+    max-width: 100%; /* S'assurer que la carte ne dépasse pas la largeur du conteneur */
+}
 
+.btn-green {
+    color: #fff;
+    background-color: #0d730d;
+    border-color: #0d730d;
+}
 @font-face {
     font-family: 'Paris2024-Variable';
     src: url('../fonts/Paris2024-Variable.ttf') format('truetype');
