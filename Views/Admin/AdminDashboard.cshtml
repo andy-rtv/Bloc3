@@ -15,6 +15,7 @@
                 <th>Description</th>
                 <th>Pourcentage</th>
                 <th>Nombre de Personnes</th>
+                <th>Nombre de Ventes</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,8 +25,14 @@
                 <tr>
                     <td>@offer.Type</td>
                     <td>@offer.Description</td>
-                    <td>@offer.Pourcentage</td>
+                    <td>@offer.Pourcentage %</td>
                     <td>@offer.NbPersonne</td>
+                    <td>
+                        @{
+                            var salesCount = ViewBag.SalesCount.ContainsKey(offer.Id_Offre) ? ViewBag.SalesCount[offer.Id_Offre] : 0;
+                        }
+                        @salesCount
+                    </td>
                     <td>
                         <a asp-action="EditOffer" asp-route-id="@offer.Id_Offre" class="btn btn-secondary">Edit</a>
                         <a asp-action="DeleteOffer" asp-route-id="@offer.Id_Offre" class="btn btn-danger">Delete</a>

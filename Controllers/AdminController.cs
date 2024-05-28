@@ -30,10 +30,25 @@ public class AdminController : Controller
     public async Task<IActionResult> AdminDashboard()
     {
         var users = await _userManager.Users.ToListAsync();
-        ViewBag.Offers = await _context.Offres.ToListAsync();
-        ViewBag.Events = await _context.Evenements.ToListAsync();
+        var offers = await _context.Offres.ToListAsync();
+        var events = await _context.Evenements.ToListAsync();
+
+        var salesCount = await _context.AchatEvenementOffres
+            .GroupBy(a => a.OffreId)
+            .Select(g => new
+            {
+                OffreId = g.Key,
+                SalesCount = g.Count()
+            })
+            .ToListAsync();
+
+        ViewBag.Offers = offers;
+        ViewBag.Events = events;
+        ViewBag.SalesCount = salesCount.ToDictionary(sc => sc.OffreId, sc => sc.SalesCount);
+
         return View(users);
     }
+
 
     // Affiche le formulaire de création d'une nouvelle offre
     public IActionResult CreateOffer()
