@@ -45,7 +45,7 @@
                     </ul>
                     <div class="d-flex align-items-center">
                         <a class="nav-link position-relative" asp-area="" asp-controller="Home" asp-action="Cart">
-                            <i class="bi bi-cart" style="font-size: 28px; width: 100%; color: #0d730d; background-color: #E2E2E2; padding: 15px; border-radius: 50%;"></i>
+                            <i class="bi bi-cart" style="font-size: 28px; width: 100%; color: #0d730d; padding: 15px; border-radius: 50%;"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 @(Context.Session.Get<List<PanierItem>>("Cart")?.Count ?? 0)
                             </span>
